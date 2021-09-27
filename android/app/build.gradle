@@ -47,6 +47,7 @@ android {
         applicationId "com.tae.social_app"
         minSdkVersion 16
         targetSdkVersion 30
+        multiDexEnabled true  // need for firestore
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

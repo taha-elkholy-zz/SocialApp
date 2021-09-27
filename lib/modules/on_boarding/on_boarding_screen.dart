@@ -23,12 +23,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   // controller of the page view and smooth indicator
   var pageController = PageController();
 
-  // when the page finished release the controller
-  @override
-  void dispose() {
-    pageController.dispose();
-  }
-
   // list of the screens will be shown in onBoarding
   List<OnBoardingModel> onBoardingScreens = [
     OnBoardingModel(
@@ -99,7 +93,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 SmoothPageIndicator(
                   controller: pageController,
                   count: onBoardingScreens.length,
-                  effect: ExpandingDotsEffect(
+                  effect: const ExpandingDotsEffect(
                       dotColor: Colors.grey,
                       activeDotColor: defaultColor,
                       dotHeight: 10,
@@ -168,7 +162,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     // in SharedPreferences
     CashHelper.saveData(key: BOARDING_SEEN, value: true).then((value) {
       if (value) {
-        navigateAndFinish(context: context, newScreen: const LoginScreen());
+        navigateAndFinish(context, LoginScreen());
       }
     });
   }

@@ -3,43 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/layout/home_layout.dart';
-import 'package:social_app/modules/register/register_screen.dart';
+import 'package:social_app/modules/register/register_cubit/register_cubit.dart';
+import 'package:social_app/modules/register/register_cubit/register_states.dart';
 import 'package:social_app/shared/components/components.dart';
-import 'package:social_app/shared/components/constants.dart';
-import 'package:social_app/shared/network/local/cash_helper.dart';
 
-import 'login_cubit/login_cubit.dart';
-import 'login_cubit/login_states.dart';
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({Key? key}) : super(key: key);
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
-
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      // start BlocProvider of LoginCubit here
-      // as we do not need it in any where
-      create: (BuildContext context) => LoginCubit(),
-      child: BlocConsumer<LoginCubit, LoginStates>(
+      create: (context) => RegisterCubit(),
+      child: BlocConsumer<RegisterCubit, RegisterStates>(
         listener: (context, state) {
           // listen for states
-          if (state is LoginSuccessState) {
-            CashHelper.saveData(key: USER_ID, value: state.userId)
-                .then((value) {
-              navigateAndFinish(context, HomeLayout());
-            });
+          if (state is RegisterCreateUserSuccessState) {
+            navigateAndFinish(context, HomeLayout());
           }
 
-          if (state is LoginErrorState) {
+          if (state is RegisterErrorState) {
             showToast(message: state.error, state: ToastStates.ERROR);
           }
         },
         builder: (context, state) {
-          var cubit = LoginCubit.get(context);
+          var cubit = RegisterCubit.get(context);
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -61,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'LOGIN',
+                          'REGISTER',
                           style: Theme.of(context)
                               .textTheme
                               .headline4!
@@ -71,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                           height: 15,
                         ),
                         Text(
-                          'Login now to Communicate with your friends',
+                          'Register now to Communicate with your friends',
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -79,6 +73,20 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const SizedBox(
                           height: 30,
+                        ),
+                        defaultTextFormField(
+                            controller: _nameController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'please enter your name';
+                              }
+                            },
+                            inputType: TextInputType.text,
+                            label: 'User Name',
+                            prefix: Icons.person,
+                            textCapitalization: TextCapitalization.sentences),
+                        const SizedBox(
+                          height: 15,
                         ),
                         defaultTextFormField(
                           controller: _emailController,
@@ -95,39 +103,77 @@ class LoginScreen extends StatelessWidget {
                           height: 15,
                         ),
                         defaultTextFormField(
+                          controller: _phoneController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'please enter your phone number';
+                            }
+                          },
+                          inputType: TextInputType.phone,
+                          label: 'Phone Number',
+                          prefix: Icons.phone,
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        defaultTextFormField(
                             controller: _passwordController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'please enter your password';
                               }
                             },
+                            inputType: TextInputType.visiblePassword,
+                            label: 'Password',
+                            prefix: Icons.lock_open_rounded,
+                            isPassword: cubit.passwordIsPassword,
+                            suffix: cubit.passwordSuffixIcon,
+                            onSuffixPressed: () {
+                              cubit.changePasswordVisibility();
+                            }),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        defaultTextFormField(
+                            controller: _confirmPasswordController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'please confirm your password';
+                              } else if (value != _passwordController.text) {
+                                return 'Password not match';
+                              }
+                            },
                             onSubmit: (value) {
                               if (_formKey.currentState!.validate()) {
-                                cubit.userEmailLogin(
+                                cubit.userEmailRegister(
+                                    name: _nameController.text,
                                     email: _emailController.text,
+                                    phone: _phoneController.text,
                                     password: _passwordController.text);
                               }
                             },
                             inputType: TextInputType.visiblePassword,
-                            label: 'Password',
+                            label: 'Confirm Password',
                             prefix: Icons.lock_open_rounded,
-                            isPassword: cubit.isPassword,
-                            suffix: cubit.suffixIcon,
+                            isPassword: cubit.confirmPasswordIsPassword,
+                            suffix: cubit.confirmPasswordSuffixIcon,
                             onSuffixPressed: () {
-                              cubit.changePasswordVisibility();
+                              cubit.changeConfirmPasswordVisibility();
                             }),
                         const SizedBox(
                           height: 30,
                         ),
                         ConditionalBuilder(
-                          condition: state is! LoginLoadingState,
+                          condition: state is! RegisterLoadingState,
                           builder: (BuildContext context) => defaultButton(
-                              text: 'login',
+                              text: 'register',
                               isUpperCase: true,
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  cubit.userEmailLogin(
+                                  cubit.userEmailRegister(
+                                      name: _nameController.text,
                                       email: _emailController.text,
+                                      phone: _phoneController.text,
                                       password: _passwordController.text);
                                 }
                               }),
@@ -140,11 +186,11 @@ class LoginScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('Don\'t have account?'),
+                            const Text('Already have an account?'),
                             defaultTextButton(
-                                text: 'register',
+                                text: 'Login',
                                 onPressed: () {
-                                  navigateTo(context, RegisterScreen());
+                                  Navigator.pop(context);
                                 }),
                           ],
                         ),

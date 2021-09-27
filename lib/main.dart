@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/layout/home_layout.dart';
 import 'package:social_app/modules/login/login_screen.dart';
 import 'package:social_app/modules/on_boarding/on_boarding_screen.dart';
 import 'package:social_app/shared/bloc_observer.dart';
@@ -15,6 +17,9 @@ void main() async {
   // then run the app
   WidgetsFlutterBinding.ensureInitialized();
 
+  //init firebase
+  await Firebase.initializeApp();
+
   // add bloc observer for monitoring my code
   Bloc.observer = MyBlocObserver();
 
@@ -24,6 +29,9 @@ void main() async {
   // get app mode from shared preferences
   // dynamic as it may be null in first time
   dynamic _isDark = CashHelper.getData(key: IS_DARK);
+
+  // get user id if user login before
+  userId = CashHelper.getData(key: USER_ID);
 
   // start home of the app
   // it may be OnBoarding, Login or HomeScreen
@@ -35,8 +43,12 @@ void main() async {
   if (_isBoardingSeen != null) {
     // user seen the on boarding before
     // we will not shown it again
-    // todo if user login go to home screen
-    _home = const LoginScreen();
+    // ask again if there is user logged in ore not
+    if (userId != null) {
+      _home = HomeLayout();
+    } else {
+      _home = LoginScreen();
+    }
   } else {
     // user do not see on boarding yet
     _home = const OnBoardingScreen();
@@ -63,7 +75,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => AppCubit()..getAppMode(isDark: isDark),
+          create: (context) => AppCubit()
+            ..getAppMode(isDark: isDark)
+            ..getUserData(),
         ),
       ],
       child: BlocConsumer<AppCubit, AppStates>(
@@ -82,4 +96,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
