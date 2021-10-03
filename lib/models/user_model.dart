@@ -3,7 +3,9 @@ class UserModel {
   late String name;
   late String email;
   late String phone;
-  late String? image;
+  late String image;
+  late String coverImage;
+  late String bio;
   late bool isEmailVerified;
 
 // create constructor
@@ -14,7 +16,13 @@ class UserModel {
     required this.phone,
     // isEmailVerified start with false always
     this.isEmailVerified = false,
-    this.image,
+    //default bio text
+    this.bio = 'Write your bio here...',
+    //default images
+    this.image =
+        'https://image.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
+    this.coverImage =
+        'https://image.freepik.com/free-photo/portrait-positive-male-with-brunette-hair-bristle-has-piercing-wearing-black-sweater-holding-mobile-phone-copy-space-right-isolated-yellow-wall_295783-14551.jpg',
   });
 
   // convert the map to model
@@ -25,6 +33,8 @@ class UserModel {
     phone = json['phone'];
     isEmailVerified = json['is_email_verified'];
     image = json['image'];
+    coverImage = json['cover_image'];
+    bio = json['bio'];
   }
 
   // convert data to map
@@ -36,6 +46,8 @@ class UserModel {
       'phone': phone,
       'is_email_verified': isEmailVerified,
       'image': image,
+      'cover_image': coverImage,
+      'bio': bio,
     };
   }
 }

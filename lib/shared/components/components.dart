@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:social_app/shared/styles/colors.dart';
+import 'package:social_app/shared/styles/icon_broken.dart';
 
 // make all TextButtons with same style
 Widget defaultTextButton({
@@ -28,6 +29,7 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
 // text form field
 
 Widget defaultTextFormField({
+  required context,
   required TextEditingController controller,
   required String? Function(String? value) validator,
   required TextInputType inputType,
@@ -44,13 +46,12 @@ Widget defaultTextFormField({
     TextFormField(
       controller: controller,
       keyboardType: inputType,
-      cursorColor: defaultColor,
       obscureText: isPassword,
       onTap: onTap,
       onChanged: onChanged,
       onFieldSubmitted: onSubmit,
       textCapitalization: textCapitalization,
-      style: const TextStyle(color: defaultColor),
+      style: Theme.of(context).textTheme.bodyText2,
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(
@@ -123,3 +124,19 @@ Color choseToastColor(ToastStates state) {
   }
   return color;
 }
+
+defaultAppBarr({
+  required BuildContext context,
+  String? title,
+  List<Widget>? actions,
+}) =>
+    AppBar(
+      titleSpacing: 5,
+      leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(IconBroken.Arrow___Left_2)),
+      title: (title != null) ? Text(title) : null,
+      actions: (actions != null) ? actions : null,
+    );

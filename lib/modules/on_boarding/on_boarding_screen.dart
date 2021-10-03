@@ -18,7 +18,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   // refer to the current page index in the
   // on boarding list,
   // if last one it will be = true
-  late bool _isLast;
+  bool _isLast = false;
 
   // controller of the page view and smooth indicator
   var pageController = PageController();

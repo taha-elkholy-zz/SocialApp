@@ -76,7 +76,9 @@ class RegisterCubit extends Cubit<RegisterStates> {
   }) {
     // create user with my own model of user
     UserModel model = UserModel(
-        userId: userId, name: name, phone: phone, email: email, image: null);
+      userId: userId, name: name, phone: phone, email: email,
+      // use default image
+    );
 
     FirebaseFirestore.instance
         .collection(USERS_COLLECTION)

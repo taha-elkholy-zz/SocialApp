@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/modules/new_post/new_post_screen.dart';
 import 'package:social_app/modules/search/search_screen.dart';
 import 'package:social_app/shared/components/components.dart';
 import 'package:social_app/shared/cubit/app_cubit.dart';
@@ -10,18 +11,36 @@ class HomeLayout extends StatelessWidget {
   HomeLayout({Key? key}) : super(key: key);
 
   List<BottomNavigationBarItem> bottomNavBarItems = [
-    const BottomNavigationBarItem(icon: Icon(IconBroken.Home), label: 'Feeds'),
-    const BottomNavigationBarItem(icon: Icon(IconBroken.Chat), label: 'Chats'),
     const BottomNavigationBarItem(
-        icon: Icon(IconBroken.Location), label: 'Users'),
+      icon: Icon(IconBroken.Home),
+      label: 'Feeds',
+    ),
     const BottomNavigationBarItem(
-        icon: Icon(IconBroken.Setting), label: 'Settings'),
+      icon: Icon(IconBroken.Chat),
+      label: 'Chats',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(IconBroken.Paper_Upload),
+      label: 'Post',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(IconBroken.Location),
+      label: 'Users',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(IconBroken.Setting),
+      label: 'Settings',
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is AppNewPostState) {
+          navigateTo(context, const NewPostScreen());
+        }
+      },
       builder: (context, state) {
         var cubit = AppCubit.get(context);
         return Scaffold(

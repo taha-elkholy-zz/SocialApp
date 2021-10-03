@@ -32,6 +32,26 @@ ThemeData lightTheme = ThemeData(
     unselectedItemColor: Colors.grey,
     elevation: 20,
   ),
+  textTheme: const TextTheme(
+    bodyText1: TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+      fontFamily: 'Jannah',
+    ),
+    subtitle1: TextStyle(
+      fontSize: 14,
+      height: 1.3,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    ),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: defaultColor),
+    ),
+  ),
 );
 
 ThemeData darkTheme = ThemeData(
@@ -64,5 +84,25 @@ ThemeData darkTheme = ThemeData(
     selectedItemColor: defaultColor,
     unselectedItemColor: Colors.white54,
     elevation: 20,
+  ),
+  textTheme: const TextTheme(
+    bodyText1: TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+      fontFamily: 'Jannah',
+    ),
+    subtitle1: TextStyle(
+      fontSize: 14,
+      height: 1.3,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: defaultColor),
+    ),
   ),
 );

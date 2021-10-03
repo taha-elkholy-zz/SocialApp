@@ -41,15 +41,7 @@ class LoginScreen extends StatelessWidget {
         builder: (context, state) {
           var cubit = LoginCubit.get(context);
           return Scaffold(
-            backgroundColor: Colors.white,
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-              // control of status bar color
-              systemOverlayStyle: const SystemUiOverlayStyle(
-                  statusBarColor: Colors.white,
-                  statusBarIconBrightness: Brightness.dark),
-            ),
+            appBar: AppBar(),
             body: Center(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -62,25 +54,20 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         Text(
                           'LOGIN',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(color: Colors.black),
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                         const SizedBox(
                           height: 15,
                         ),
                         Text(
                           'Login now to Communicate with your friends',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: Colors.grey),
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                         const SizedBox(
                           height: 30,
                         ),
                         defaultTextFormField(
+                          context: context,
                           controller: _emailController,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -95,6 +82,7 @@ class LoginScreen extends StatelessWidget {
                           height: 15,
                         ),
                         defaultTextFormField(
+                            context: context,
                             controller: _passwordController,
                             validator: (value) {
                               if (value!.isEmpty) {

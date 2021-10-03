@@ -75,6 +75,7 @@ class RegisterScreen extends StatelessWidget {
                           height: 30,
                         ),
                         defaultTextFormField(
+                            context: context,
                             controller: _nameController,
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -89,6 +90,7 @@ class RegisterScreen extends StatelessWidget {
                           height: 15,
                         ),
                         defaultTextFormField(
+                          context: context,
                           controller: _emailController,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -103,6 +105,7 @@ class RegisterScreen extends StatelessWidget {
                           height: 15,
                         ),
                         defaultTextFormField(
+                          context: context,
                           controller: _phoneController,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -117,6 +120,7 @@ class RegisterScreen extends StatelessWidget {
                           height: 15,
                         ),
                         defaultTextFormField(
+                            context: context,
                             controller: _passwordController,
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -135,6 +139,7 @@ class RegisterScreen extends StatelessWidget {
                           height: 15,
                         ),
                         defaultTextFormField(
+                            context: context,
                             controller: _confirmPasswordController,
                             validator: (value) {
                               if (value!.isEmpty) {
