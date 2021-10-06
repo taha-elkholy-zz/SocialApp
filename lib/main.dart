@@ -77,7 +77,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AppCubit()
             ..getAppMode(isDark: isDark)
-            ..getUserData(),
+            ..getUserData()
+            ..getAllUsers()
+            ..getPosts(),
         ),
       ],
       child: BlocConsumer<AppCubit, AppStates>(

@@ -18,13 +18,23 @@ class EditProfileScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = AppCubit.get(context);
-        var model = cubit.userModel;
+        var model = cubit.userModel!;
         nameController.text = model.name;
         bioController.text = model.bio;
         phoneController.text = model.phone;
 
-        const snackBar = SnackBar(
-          content: Text('You have un saved image'),
+        final snackBar = SnackBar(
+          content: const Text('You have un saved image'),
+          action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {
+                if (cubit.coverImage != null) {
+                  cubit.removeCoverImage();
+                }
+                if (cubit.profileImage != null) {
+                  cubit.removeProfileImage();
+                }
+              }),
         );
         return Scaffold(
           appBar: defaultAppBarr(

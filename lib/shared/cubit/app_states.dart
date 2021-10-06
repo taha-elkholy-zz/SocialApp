@@ -28,6 +28,9 @@ class AppUpdateUserErrorState extends AppStates {
   AppUpdateUserErrorState(this.error);
 }
 
+// remove user state
+class AppRemoveUserModelState extends AppStates {}
+
 // change bottom nav state
 class AppChangeBottomNavState extends AppStates {}
 
@@ -50,6 +53,14 @@ class AppPickProfileImageErrorState extends AppStates {
   AppPickProfileImageErrorState(this.error);
 }
 
+class AppPickPostImageSuccessState extends AppStates {}
+
+class AppPickPostImageErrorState extends AppStates {
+  final String error;
+
+  AppPickPostImageErrorState(this.error);
+}
+
 // upload images states
 class AppUploadCoverImageLoadingState extends AppStates {}
 
@@ -69,4 +80,81 @@ class AppUploadProfileImageErrorState extends AppStates {
   final String error;
 
   AppUploadProfileImageErrorState(this.error);
+}
+
+class AppUploadPostImageLoadingState extends AppStates {}
+
+class AppUploadPostImageSuccessState extends AppStates {}
+
+class AppUploadPostImageErrorState extends AppStates {
+  final String error;
+
+  AppUploadPostImageErrorState(this.error);
+}
+
+// create post states
+class AppCreatePostLoadingState extends AppStates {}
+
+class AppCreatePostSuccessState extends AppStates {}
+
+class AppCreatePostErrorState extends AppStates {
+  final String error;
+
+  AppCreatePostErrorState(this.error);
+}
+
+// remove image states
+class AppRemoveProfileImageState extends AppStates {}
+
+class AppRemoveCoverImageState extends AppStates {}
+
+class AppRemovePostImageState extends AppStates {}
+
+// get posts states
+class AppGetPostsLoadingState extends AppStates {}
+
+class AppGetPostsSuccessState extends AppStates {}
+
+class AppGetPostsErrorState extends AppStates {
+  final String error;
+
+  AppGetPostsErrorState(this.error);
+}
+
+// like a post states
+class AppLikePostsSuccessState extends AppStates {}
+
+class AppLikePostsErrorState extends AppStates {
+  final String error;
+
+  AppLikePostsErrorState(this.error);
+}
+
+// Write a Comment states
+class AppWriteCommentSuccessState extends AppStates {}
+
+class AppWriteCommentErrorState extends AppStates {
+  final String error;
+
+  AppWriteCommentErrorState(this.error);
+}
+
+// Write a Comment states
+class AppGetCommentsSuccessState extends AppStates {}
+
+class AppGetCommentsErrorState extends AppStates {
+  final String error;
+
+  AppGetCommentsErrorState(this.error);
+}
+
+// get all users states
+class AppGetAllUsersLoadingState extends AppStates {}
+
+class AppGetAllUsersSuccessState extends AppStates {}
+
+class AppGetAllUsersErrorState extends AppStates {
+  final String error;
+
+  AppGetAllUsersErrorState(this.error);
 }

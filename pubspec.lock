@@ -71,6 +71,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  collision:
+    dependency: transitive
+    description:
+      name: collision
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   conditional_builder_null_safety:
     dependency: "direct main"
     description:
@@ -78,6 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.6"
+  crop:
+    dependency: "direct main"
+    description:
+      name: crop
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.1+1"
   cross_file:
     dependency: transitive
     description:

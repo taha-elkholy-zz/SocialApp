@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/modules/login/login_screen.dart';
 import 'package:social_app/modules/new_post/new_post_screen.dart';
 import 'package:social_app/modules/search/search_screen.dart';
 import 'package:social_app/shared/components/components.dart';
@@ -38,7 +40,7 @@ class HomeLayout extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
         if (state is AppNewPostState) {
-          navigateTo(context, const NewPostScreen());
+          navigateTo(context, NewPostScreen());
         }
       },
       builder: (context, state) {
@@ -47,6 +49,14 @@ class HomeLayout extends StatelessWidget {
           appBar: AppBar(
             title: Text(cubit.titles[cubit.currentIndex]),
             actions: [
+              IconButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut().then((value) {
+                      navigateAndFinish(context, LoginScreen());
+                      cubit.removeUserData();
+                    });
+                  },
+                  icon: const Icon(IconBroken.Logout)),
               IconButton(
                   onPressed: () {}, icon: const Icon(IconBroken.Notification)),
               IconButton(
